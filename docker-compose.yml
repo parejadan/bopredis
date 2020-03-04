@@ -2,9 +2,11 @@ version: "3"
 services:
   queue:
     image: redis:5.0.7
-    command: bind 0.0.0.0  # exposes redis for discovery
     ports:
       - 6379:6379
+    volumes:
+      - ./docker/queue/redis.conf:/redis.conf
+    command: ["redis-server", "/redis.conf"]
   dashboard:
     build:
       context: .
