@@ -17,7 +17,7 @@ def create_app():
 cli = FlaskGroup(create_app=create_app)
 
 
-@cli.command('run_worker')
+@cli.command("run_worker")
 def run_worker():
     redis_connection = redis.from_url(REDIS_URL)
     with Connection(redis_connection):
