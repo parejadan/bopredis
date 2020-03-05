@@ -7,6 +7,9 @@ services:
     volumes:
       - ./docker/queue/redis.conf:/redis.conf
     command: ["redis-server", "/redis.conf"]
+    networks:
+      - shared_network
+
   dashboard:
     build:
       context: .
@@ -16,6 +19,9 @@ services:
     command: rq-dashboard -H queue
     depends_on:
       - queue
+    networks:
+      - shared_network
+
   worker:
     depends_on:
       - queue
@@ -27,3 +33,9 @@ services:
     volumes:
       - ./worker:/worker
     command: python /worker/manage.py run_worker
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: false  # when false we expect this project to create network
