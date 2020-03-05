@@ -4,9 +4,15 @@ import requests
 from rq import Connection, Worker
 from flask import Flask
 from flask.cli import FlaskGroup
+import sentry_sdk
+
 
 REDIS_URL = os.environ.get("REDIS_URL")
 REDIS_QUEUE = os.environ.get("REDIS_QUEUE")
+
+SENTRY_DSN = os.environ.get("SENTRY_DSN")
+if SENTRY_DSN:
+    sentry_sdk.init(dsn=SENTRY_DSN)
 
 
 def create_app():
